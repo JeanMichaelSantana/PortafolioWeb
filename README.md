@@ -1,2 +1,478 @@
-# Portafolio-Web-Jean-Michael-S.-Santana-
-Proyecto de portafolio personal one-page creado con HTML5, CSS3, JavaScript y Bootstrap 5. Diseño cyberpunk oscuro en púrpura neón, con modo claro/oscuro, hero, bio profesional, stack tecnológico, proyectos filtrables, experiencia laboral, redes sociales y diseño totalmente responsivo.
+
+
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portafolio Shadow Monarch - Jean Michael</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Oxanium:wght@400;600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --bg: #0a0015;
+      --bg-deep: #05000d;
+      --bg-card: rgba(15, 0, 26, 0.70);
+      --text: #e0e0ff;
+      --purple-main: #7e57c2;
+      --purple-dark: #4a148c;
+      --purple-neon: #ab47bc;
+      --purple-glow: #ba68c8;
+      --purple-light: #e1bee7;
+      --glow-purple: 0 0 12px #ab47bc, 0 0 24px #ab47bc, 0 0 48px #7e57c2, 0 0 80px #4a148c;
+      --glow-purple-soft: 0 0 10px #ba68c8, 0 0 20px #ab47bc;
+    }
+
+    [data-bs-theme="light"] {
+      --bg: #f3e8ff;
+      --bg-deep: #ede0ff;
+      --bg-card: rgba(243, 232, 255, 0.85);
+      --text: #2a0d4a;
+      --purple-main: #6a1b9a;
+      --purple-dark: #4a148c;
+      --purple-neon: #9c27b0;
+      --purple-glow: #ab47bc;
+      --glow-purple: 0 0 10px #9c27b0, 0 0 20px #ab47bc, 0 0 40px #ba68c8;
+      --glow-purple-soft: 0 0 8px #ba68c8, 0 0 16px #ab47bc;
+    }
+
+    body {
+      background: linear-gradient(to bottom, var(--bg-deep), var(--bg));
+      color: var(--text);
+      font-family: 'Oxanium', 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="7" fill="none" stroke="%23ab47bc" stroke-width="2.5" opacity="0.9"/></svg>'), auto;
+    }
+
+    h1, h2, h3, .navbar-brand {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-shadow: var(--glow-purple-soft);
+    }
+
+    .navbar {
+      background: rgba(10, 0, 21, 0.80) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--purple-neon);
+    }
+
+    [data-bs-theme="light"] .navbar {
+      background: rgba(243, 232, 255, 0.80) !important;
+      border-bottom: 2px solid var(--purple-main);
+    }
+
+    .nav-link, .navbar-brand {
+      color: var(--purple-neon) !important;
+      transition: all 0.35s;
+    }
+
+    .nav-link:hover {
+      text-shadow: var(--glow-purple);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .hero {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, #1a0033 100%);
+      padding: 200px 0 140px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-bs-theme="light"] .hero {
+      background: linear-gradient(180deg, #f3e8ff 0%, #e8d9ff 100%);
+    }
+
+    .profile-img {
+      width: 240px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid var(--purple-neon);
+      box-shadow: var(--glow-purple), inset 0 0 25px rgba(171,71,188,0.4);
+      filter: brightness(1.1) contrast(1.2) saturate(1.3);
+      transition: all 0.5s;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 60px var(--purple-glow);
+      filter: brightness(1.2) contrast(1.4) saturate(1.5);
+    }
+
+    .glitch {
+      position: relative;
+      animation: glitch-shadow 5s infinite;
+    }
+
+    @keyframes glitch-shadow {
+      0%, 100% { transform: translate(0); text-shadow: var(--glow-purple-soft); }
+      15% { transform: translate(-3px, 3px); }
+      35% { transform: translate(3px, -3px); }
+    }
+
+    .glow-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--purple-main);
+      box-shadow: var(--glow-purple-soft);
+      transition: all 0.5s ease;
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .glow-card:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: var(--glow-purple);
+      border-color: var(--purple-neon);
+    }
+
+    .filter-btn {
+      border: 2px solid var(--purple-main);
+      color: var(--purple-neon);
+      background: transparent;
+      transition: all 0.4s;
+      font-weight: 600;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--purple-neon);
+      color: #000;
+      box-shadow: var(--glow-purple);
+      transform: scale(1.1);
+    }
+
+    [data-bs-theme="light"] .filter-btn {
+      border-color: var(--purple-dark);
+      color: var(--purple-main);
+    }
+
+    [data-bs-theme="light"] .filter-btn.active,
+    [data-bs-theme="light"] .filter-btn:hover {
+      background: var(--purple-main);
+      color: white;
+    }
+
+    .project-card {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.7s ease-out;
+    }
+
+    .project-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .experience-row {
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .footer {
+      background: var(--bg-deep);
+      border-top: 3px solid var(--purple-neon);
+      padding: 4rem 0 2rem;
+      text-shadow: var(--glow-purple-soft);
+    }
+
+    [data-bs-theme="light"] .footer {
+      background: #ede0ff;
+      border-top-color: var(--purple-dark);
+    }
+
+    .social-icon {
+      font-size: 2rem;
+      color: var(--purple-neon);
+      transition: all 0.4s;
+      margin: 0 1.2rem;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.4) rotate(10deg);
+      text-shadow: var(--glow-purple);
+    }
+
+    .btn-shadow {
+      background: transparent;
+      border: 2.5px solid var(--purple-neon);
+      color: var(--purple-neon);
+      font-weight: bold;
+      box-shadow: var(--glow-purple-soft);
+      transition: all 0.4s;
+    }
+
+    .btn-shadow:hover {
+      background: var(--purple-neon);
+      color: #000;
+      transform: translateY(-4px);
+      box-shadow: var(--glow-purple);
+    }
+
+    /* Toggle Switch Mejorado */
+    .theme-toggle {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .theme-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--purple-dark);
+      transition: .4s;
+      border-radius: 34px;
+      border: 2px solid var(--purple-neon);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: var(--purple-light);
+      transition: .4s;
+      border-radius: 50%;
+      box-shadow: var(--glow-purple-soft);
+    }
+
+    input:checked + .slider {
+      background-color: var(--purple-main);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+      background-color: #fff;
+    }
+
+    .slider::after {
+      content: "☀️ 🌙";
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      color: var(--text);
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      width: 48px;
+      pointer-events: none;
+    }
+
+    .bio-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .bio-section h2 {
+      color: var(--purple-neon);
+      text-shadow: var(--glow-purple);
+    }
+
+    .bio-section p {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 160px 0 100px; }
+      .profile-img { width: 180px; height: 180px; }
+    }
+  </style>
+</head>
+<body data-bs-theme="dark">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand glitch" href="#">SHADOW <span style="color:var(--purple-light)">MONARCH</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#hero">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#bio">Bio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tech">Stack</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Proyectos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experiencia</a></li>
+          <li class="nav-item ms-3">
+            <label class="theme-toggle">
+              <input type="checkbox" id="themeToggle" />
+              <span class="slider"></span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero con tu foto -->
+  <section id="hero" class="hero">
+    <div class="container">
+      <img src="https://assets.grok.com/users/ba000684-824e-4dec-93bd-5b7b28ecb6d1/generated/dacf37f5-0fec-4a50-85cb-fefe484ea9e9/image.jpg" alt="Jean Michael - Foto de perfil" class="profile-img mb-4">
+      <h1 class="display-3 glitch mb-3">ARISE, <span style="color:var(--purple-light)">JEAN MICHAEL</span></h1>
+      <p class="lead fs-4">Frontend Developer | UI/UX con poder de las sombras 🌑💜</p>
+    </div>
+  </section>
+
+  <!-- Sección Bio mejorada -->
+  <section id="bio" class="bio-section py-5">
+    <div class="container">
+      <h2 class="glitch">Sobre mí</h2>
+      <p class="lead">
+        Soy Jean Michael, un apasionado desarrollador frontend especializado en crear interfaces inmersivas y minimalistas con un toque futurista. Mi estilo combina estética cyberpunk oscura con vibraciones púrpura intensas, inspiradas en mundos como Solo Leveling. Domino HTML5, CSS3, JavaScript y Bootstrap, enfocándome en experiencias responsivas, accesibles y visualmente impactantes. Siempre listo para "despertar" nuevos proyectos con poder de sombra.
+      </p>
+      <p>
+        Actualmente busco oportunidades para colaborar en proyectos innovadores. Si necesitas un frontend que haga que tu web brille como un Monarca de las Sombras, ¡contáctame! 💾🔮
+      </p>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section id="tech" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 glitch">Mi Stack</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="glow-card text-center p-4">
+            <i class="fab fa-html5 fa-4x mb-3" style="color:var(--purple-neon)"></i>
+            <h5>HTML5 + CSS3</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="glow-card text-center p-4">
+            <i class="fab fa-js fa-4x mb-3" style="color:var(--purple-glow)"></i>
+            <h5>JavaScript</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="glow-card text-center p-4">
+            <i class="fab fa-bootstrap fa-4x mb-3" style="color:var(--purple-light)"></i>
+            <h5>Bootstrap 5</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section id="projects" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 glitch">Proyectos</h2>
+      <div class="text-center mb-5">
+        <button class="filter-btn btn mx-2 active" data-filter="all">Todos</button>
+        <button class="filter-btn btn mx-2" data-filter="web">Web</button>
+        <button class="filter-btn btn mx-2" data-filter="app">App</button>
+        <button class="filter-btn btn mx-2" data-filter="design">Diseño</button>
+      </div>
+      <div class="row g-4" id="projectsContainer">
+        <!-- Agrega tus 9 proyectos aquí como antes -->
+        <div class="col-md-6 col-lg-4 project-card web show">
+          <div class="glow-card">
+            <img src="https://via.placeholder.com/600x400/1a0033/ab47bc?text=Proyecto+Web+1" class="card-img-top" alt="">
+            <div class="p-4">
+              <h5>Proyecto Web 1</h5>
+              <p class="small">Interfaz con aura de sombras.</p>
+            </div>
+          </div>
+        </div>
+        <!-- ... otros 8 proyectos ... -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiencia -->
+  <section id="experience" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 glitch">Experiencia</h2>
+      <div class="row experience-row g-4">
+        <div class="col-md-5 col-lg-4">
+          <div class="glow-card text-center p-4">
+            <img src="https://via.placeholder.com/500x300/0a0015/7e57c2?text=Exp+1" class="img-fluid mb-3 rounded" alt="">
+            <h5>Desarrollador Frontend</h5>
+            <p class="small">2024 – Presente</p>
+          </div>
+        </div>
+        <!-- Agrega más si tienes -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="mb-4">
+        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      </div>
+      <button class="btn btn-shadow px-5 py-3 mb-4" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        ARISE <i class="fas fa-arrow-up ms-2"></i>
+      </button>
+      <p>© 2026 Jean Michael – Powered by Shadow Monarch</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Theme toggle con switch
+    const toggleInput = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    function setTheme(theme) {
+      html.setAttribute('data-bs-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    toggleInput.addEventListener('change', () => {
+      const current = html.getAttribute('data-bs-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Filtro proyectos
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          card.classList.toggle('show', filter === 'all' || card.classList.contains(filter));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
